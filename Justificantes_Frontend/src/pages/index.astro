@@ -1,0 +1,38 @@
+---
+import Encabezado from '../components/encabezado.jsx';
+---
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/styles/styles.css">
+    <title>Proceso de Solicitud de Justificante</title>
+</head>
+<body class="bg-amber-100 grid min-h-dvh grid-rows-1">
+    <div class="container">
+        <Encabezado/>
+        <header>
+            <h1 class="text-3xl text-green-700 font-bold text-center">¡Bienvenido al Proceso de Solicitud de Justificante del CBTIS 86!</h1>
+        </header>
+
+        <form id="loginForm" onsubmit="return handleLogin(event)">
+            <fieldset class="container-login bg-slate-400 shadow-lg rounded-lg p-10 grid gap-4 place-items-center h-4/6 w-1/4 absolute inset-x-0  m-auto">
+                <legend class="text-1xl text-center mb-6">Ingresa tu Nombre de Usuario y Contraseña</legend>
+                
+                <label style="display: block; padding:10px;">
+                    Nombre de Usuario:
+                    <input type="text" id="username"  />
+                </label>
+                
+                <label style="display: block; padding:10px;">
+                    Contraseña:
+                    <input type="password" id="password"  />
+                </label>
+                
+                <a href="/PagPrincipal">Siguiente Página</a>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

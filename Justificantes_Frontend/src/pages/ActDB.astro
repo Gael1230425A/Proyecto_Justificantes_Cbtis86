@@ -1,0 +1,91 @@
+---
+import Menu from '../components/menu.jsx';
+import Encabezado from '../components/encabezado.jsx';
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+        <link rel="stylesheet" href="/src/styles/styles.css">
+        <title>Actualizar Alumnos</title>
+    </head>
+    <body class="bg-amber-100">
+        <div class="container">
+            <Encabezado></Encabezado>
+            <Menu></Menu>
+            <section>
+                <form action="" method="post">
+                    <fieldset class="border  border-black p-5">
+                        <legend>Actualizar la Base de Datos</legend>
+                        <h4>Subir archivo Excel</h4>
+                        <input type="file" name="subirArc" id="subirArc" accept=".xls, .xlsx, .csv">
+                        <button class="border border-black p-2">Agregar grupo</button>
+                    </fieldset>
+                </form>
+    
+                <form action="">
+                    <fieldset class="border border-black p-5">
+                        <legend>Grupos Ciclo Escolar 2024-2025</legend>
+                        <label>
+                            5°E 
+                            <button type="button" class="border border-black p-2">Eliminar</button>
+                            <button type="button" class="border border-black p-2">Editar</button>
+                        </label>
+                    </fieldset>
+                </form>
+            </section>
+        </div>
+
+    </body>
+</html>
+<script>
+// Función para verificar si el archivo es un Excel
+const verificarArchivo = (file: File): boolean => {
+  const extensionesValidas = ['.xls', '.xlsx', '.csv']; // Extensiones de Excel
+  const nombreArchivo = file.name.toLowerCase(); // Nombre del archivo en minúsculas
+  const extensionArchivo = nombreArchivo.substring(nombreArchivo.lastIndexOf('.')); // Extraer extensión
+
+  // Retorna true si la extensión es válida, false en caso contrario
+  return extensionesValidas.includes(extensionArchivo) ? true : false;
+};
+
+// Evento para capturar el archivo del input
+document.getElementById('subirArc')?.addEventListener('change', (event: Event) => {
+  const input = event.target as HTMLInputElement;
+
+  // Verificar si hay archivos seleccionados
+  input.files && input.files.length > 0
+    ? (() => {
+        const archivo = input.files![0]; // Primer archivo seleccionado
+        
+        // Mostrar mensaje basado en si el archivo es válido o no
+        verificarArchivo(archivo)? subirArchivo(archivo): (() => {
+              alert('El archivo ingresado no es válido, asegúrese que cuente con las siguientes extensiones ".xls", ".xlsx" o ".csv".');
+              input.value = ''; 
+            })();
+      })()
+    : null; // No hacer nada si no hay archivos seleccionados
+});
+
+const subirArchivo = async (archivo: File) => {
+  const formData = new FormData();
+  formData.append('file', archivo);
+
+  try {
+    const response = await fetch('http://localhost:8000/subirexcel', {
+      method: 'POST',
+      body: formData,
+    });
+
+    const result = await response.json();
+    console.log(result.message);
+  } catch (error) {
+    console.error('Error al enviar el archivo:', error);
+  }
+};
+
+
+
+</script>
